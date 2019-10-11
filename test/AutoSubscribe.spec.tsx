@@ -122,6 +122,9 @@ class SimpleComponent extends ComponentBase<SimpleProps, SimpleState> {
 }
 
 class OverriddenComponent extends SimpleComponent {
+    constructor(props: SimpleProps) {
+        super(props);
+    }
 
     static makeComponent(props: SimpleProps): ReactWrapper<any, any> {
         return mount(<OverriddenComponent { ...props } />);
@@ -163,7 +166,7 @@ function makeComponent(props: SimpleProps): ReactWrapper<any, any> {
         storeDatas,
     } = Component.state();
 
-    // Internal check: state should have two changes (including instanceId).
+    // Internal check: state should have two changes (including instance).
     expect(stateChanges).toEqual(2);
 
     // Internal check: state should have one StoreData per id in props.ids.
