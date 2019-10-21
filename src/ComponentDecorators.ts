@@ -24,5 +24,5 @@ export function DeepEqualityShouldComponentUpdate<T extends { new(props: any): C
 
 function deepEqualityComparator<P extends React.Props<any>, S extends Dictionary<any>>(
         this: ComponentBase<P, S>, nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
-    return isEqual(this.state, nextState) || isEqual(this.props, nextProps) || isEqual(this.context, nextContext);
+    return !isEqual(this.state, nextState) || !isEqual(this.props, nextProps) || !isEqual(this.context, nextContext);
 }

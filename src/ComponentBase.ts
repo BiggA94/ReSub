@@ -141,6 +141,9 @@ export abstract class ComponentBase<P extends {}, S extends Dictionary<any>> ext
                 if(!instance._isMounted) {
                     return instance._buildInitialState();
                 }
+                if(!instance.shouldComponentUpdate(nextProps, instance.state, instance.context)) {
+                    return null;
+                }
                 return instance._handleUpdate(nextProps);
             }
         }
@@ -196,9 +199,9 @@ export abstract class ComponentBase<P extends {}, S extends Dictionary<any>> ext
     }
 
     shouldComponentUpdate(nextProps: Readonly<P>, nextState: Readonly<S>, nextContext: any): boolean {
-        return !Options.shouldComponentUpdateComparator(this.state, nextState) ||
-            !Options.shouldComponentUpdateComparator(this.props, nextProps) ||
-            !Options.shouldComponentUpdateComparator(this.context, nextContext);
+        return Options.shouldComponentUpdateComparator(this.state, nextState) ||
+            Options.shouldComponentUpdateComparator(this.props, nextProps) ||
+            Options.shouldComponentUpdateComparator(this.context, nextContext);
     }
 
     isComponentMounted(): boolean {
